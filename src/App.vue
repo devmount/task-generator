@@ -1,28 +1,37 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="container grid-lg">
+      <div class="columns">
+        <div class="column col-12 text-center">
+          <img alt="Vue logo" src="./assets/logo.png">
+          <h1>Task Generator</h1>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column col-6">
+          <h2 class="text-center">Einstellung</h2>
+        </div>
+        <div class="column col-6">
+          <h2 class="text-center">Ausgabe</h2>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
+  name: 'app'
 }
 </script>
 
 <style lang="scss">
+@import "node_modules/spectre.css/src/spectre";
+@import "node_modules/spectre.css/src/spectre-icons";
+@import "node_modules/spectre.css/src/spectre-exp";
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
   margin-top: 60px;
 }
 </style>
