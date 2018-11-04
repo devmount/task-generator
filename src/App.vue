@@ -3,8 +3,7 @@
     <div class="container grid-lg">
       <div class="columns">
         <div class="column col-12 text-center">
-          <img alt="Vue logo" src="./assets/logo.png">
-          <h1>Task Generator</h1>
+          <h1>Aufgaben-Generator</h1>
         </div>
       </div>
       <div class="columns">
