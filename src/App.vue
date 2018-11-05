@@ -155,6 +155,8 @@ export default {
       // no error occured: create result
       if (!this.error.min1 && !this.error.max1 && !this.error.min2 && !this.error.max2 && !this.error.number) {
         this.result = true
+        this.copied.mlist = false
+        this.copied.dlist = false
         // init lists, integerify inputs
         this.mtasks = [], this.dtasks = []
         this.min1 = Number(this.min1), this.max1 = Number(this.max1), this.min2 = Number(this.min2), this.max2 = Number(this.max2)
