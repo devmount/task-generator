@@ -2,7 +2,7 @@
   <div id="app">
     <div class="container grid-lg">
       <div class="columns">
-        <div class="column col-12 text-center">
+        <div class="column col-12 text-center mb-2">
           <h1>Aufgaben-Generator</h1>
         </div>
       </div>
@@ -68,10 +68,10 @@
 
           <div class="empty output" v-if="!result">
             <div class="empty-icon">
-              <i class="icon icon-3x icon-arrow-left"></i>
+              <i class="icon icon-3x icon-stop"></i>
             </div>
             <p class="empty-title h5">Noch kein Ergebnis verfügbar</p>
-            <p class="empty-subtitle">Fülle das Formular aus, um Aufgaben zu generieren.</p>
+            <p class="empty-subtitle">Fülle das Formular aus und klicke auf <span class="text-italic">Start</span>,<br />um Aufgaben zu generieren.</p>
           </div>
           <div class="card output" v-else>
             <div class="card-body">
@@ -107,12 +107,27 @@
 
         </div>
       </div>
-      <div class="columns mt-3">
+      <div class="columns mt-3 pb-5">
         <div class="column col-12">
           <p>Alle Angaben und Ergebnisse ohne Gewähr</p>
         </div>
       </div>
     </div>
+
+    <footer>
+      <div class="container grid-lg">
+        <div class="columns">
+          <div class="column col-12 text-center text-gray">
+            <p>
+              <span class="d-block">Version 0.2.1</span>
+              <i class="icon icon-resize-horiz"></i> with love by <a href="https://twitter.com/devmount" target="_blank">Andreas Müller</a>.
+              <i class="icon icon-download ml-1"></i> on <a href="https://github.com/devmount/task-generator" target="_blank">GitHub</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
   </div>
 </template>
 
@@ -155,8 +170,7 @@ export default {
       // no error occured: create result
       if (!this.error.min1 && !this.error.max1 && !this.error.min2 && !this.error.max2 && !this.error.number) {
         this.result = true
-        this.copied.mlist = false
-        this.copied.dlist = false
+        this.copied.mlist = false, this.copied.dlist = false
         // init lists, integerify inputs
         this.mtasks = [], this.dtasks = []
         this.min1 = Number(this.min1), this.max1 = Number(this.max1), this.min2 = Number(this.min2), this.max2 = Number(this.max2)
@@ -205,21 +219,40 @@ $primary-color: #f57c00;
 @import "node_modules/spectre.css/src/spectre-exp";
 
 #app {
-  margin-top: 60px;
-}
-ul {
-  list-style-type: none;
-  margin-left: 0;
-  font-family: "SF Mono", "Segoe UI Mono", "Roboto Mono", Menlo, Courier, monospace;
-  line-height: 1.2;
-}
-.mt-3 {
-  margin-top: 1em;
-}
-.output {
-  min-height: 296px;
-}
-.clip {
-  min-width: 100px;
+  margin-top: 3em;
+  min-height: calc(100vh - 4em);
+  position: relative;
+
+  footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    
+    p {
+      color: #bcc3ce;
+    }
+    a {
+      color: #8c8a89;
+    }
+  }
+
+  ul {
+    list-style-type: none;
+    margin-left: 0;
+    font-family: "SF Mono", "Segoe UI Mono", "Roboto Mono", Menlo, Courier, monospace;
+    line-height: 1.2;
+  }
+  .mt-3 {
+    margin-top: 1em;
+  }
+  .pb-5 {
+    padding-bottom: 5em;
+  }
+  .output {
+    min-height: 296px;
+  }
+  .clip {
+    min-width: 100px;
+  }
 }
 </style>
