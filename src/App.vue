@@ -7,7 +7,7 @@
         </div>
       </div>
       <div class="columns">
-        <div class="column col-6">
+        <div class="column col-6 col-md-12">
           <h3 class="text-center">Einstellung</h3>
 
           <div class="card">
@@ -63,7 +63,7 @@
           </div>
 
         </div>
-        <div class="column col-6">
+        <div class="column col-6 col-md-12">
           <h3 class="text-center">Ausgabe</h3>
 
           <div class="empty output" v-if="!result">
@@ -119,7 +119,7 @@
         <div class="columns">
           <div class="column col-12 text-center text-gray">
             <p>
-              <span class="d-block">Version 0.2.1</span>
+              <span class="d-block">Version 0.2.2</span>
               <i class="icon icon-resize-horiz"></i> with love by <a href="https://twitter.com/devmount" target="_blank">Andreas Müller</a>.
               <i class="icon icon-download ml-1"></i> on <a href="https://github.com/devmount/task-generator" target="_blank">GitHub</a>.
             </p>
@@ -219,8 +219,8 @@ $primary-color: #f57c00;
 @import "node_modules/spectre.css/src/spectre-exp";
 
 #app {
-  margin-top: 3em;
-  min-height: calc(100vh - 4em);
+  margin-top: 2em;
+  min-height: calc(100vh - 3em);
   position: relative;
 
   footer {
