@@ -216,7 +216,7 @@ $primary-color: #f57c00;
 
 @import "node_modules/spectre.css/src/spectre";
 @import "node_modules/spectre.css/src/spectre-icons";
-@import "node_modules/spectre.css/src/spectre-exp";
+// @import "node_modules/spectre.css/src/spectre-exp";
 
 #app {
   margin-top: 2em;
