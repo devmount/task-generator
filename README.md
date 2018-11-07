@@ -1,29 +1,41 @@
-# task-generator
+# Task Generator
 
-## Project setup
-```
-yarn install
-```
+A web app to generate simple multiplication and division tasks.
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+## Demo
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+<http:/taskgen.devmount.de>
 
-### Run your tests
-```
-yarn run test
-```
+## Features
 
-### Lints and fixes files
-```
-yarn run lint
-```
+- Ranges for input numbers can be configured
+- The number of tasks can be configured
+- Support for division by zero
+- Directly copy results to clipboard
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Get started
+
+1. Get all files
+
+    ```bash
+    git clone https://github.com/devmount/task-generator
+    ```
+
+2. Install all dependencies using [Yarn](https://yarnpkg.com)
+
+    ```bash
+    cd task-generator
+    yarn
+    ```
+
+3. Either start the development server with hot reload at localhost:8080 ...
+
+    ```bash
+    yarn serve
+    ```
+
+4. ... or create a production build with minification
+
+    ```bash
+    yarn build
+    ```
