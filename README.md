@@ -4,7 +4,7 @@ A web app to generate simple multiplication and division tasks.
 
 ## Demo
 
-<http:/taskgen.devmount.de>
+<https://tasks.devmount.de>
 
 ## Features
 
