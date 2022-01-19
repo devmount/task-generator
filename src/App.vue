@@ -211,48 +211,42 @@ export default {
 }
 </script>
 
-<style lang="scss">
-$primary-color: #f57c00;
-
-@import "node_modules/spectre.css/src/spectre";
-@import "node_modules/spectre.css/src/spectre-icons";
-// @import "node_modules/spectre.css/src/spectre-exp";
+<style>
+@import '~spectre.css/dist/spectre.min.css';
+@import '~spectre.css/dist/spectre-icons.min.css';
 
 #app {
   margin-top: 2em;
   min-height: calc(100vh - 3em);
   position: relative;
-
-  footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    
-    p {
-      color: #bcc3ce;
-    }
-    a {
-      color: #8c8a89;
-    }
-  }
-
-  ul {
-    list-style-type: none;
-    margin-left: 0;
-    font-family: "SF Mono", "Segoe UI Mono", "Roboto Mono", Menlo, Courier, monospace;
-    line-height: 1.2;
-  }
-  .mt-3 {
-    margin-top: 1em;
-  }
-  .pb-5 {
-    padding-bottom: 5em;
-  }
-  .output {
-    min-height: 296px;
-  }
-  .clip {
-    min-width: 100px;
-  }
+}
+#app footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+#app footer p {
+  color: #bcc3ce;
+}
+#app footer a {
+  color: #8c8a89;
+}
+#app ul {
+  list-style-type: none;
+  margin-left: 0;
+  font-family: "SF Mono", "Segoe UI Mono", "Roboto Mono", Menlo, Courier, monospace;
+  line-height: 1.2;
+}
+#app .mt-3 {
+  margin-top: 1em;
+}
+#app .pb-5 {
+  padding-bottom: 5em;
+}
+#app .output {
+  min-height: 296px;
+}
+#app .clip {
+  min-width: 100px;
 }
 </style>
