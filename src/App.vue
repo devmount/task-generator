@@ -132,8 +132,9 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'app',
   data () {
     return {
@@ -208,7 +209,7 @@ export default {
       }
     }
   }
-}
+});
 </script>
 
 <style>

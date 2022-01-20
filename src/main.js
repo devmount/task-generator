@@ -1,12 +1,14 @@
-import Vue from 'vue'
-import App from './App.vue'
-import ClipboardJS from 'clipboard'
+// init app
+import { createApp } from 'vue';
+import App from '@/App.vue';
+const app = createApp(App);
 
-Vue.config.productionTip = false
-Vue.prototype.$version = process.env.VUE_APP_VERSION
+// set global properties
+app.config.globalProperties.$version = process.env.VUE_APP_VERSION;
 
+// init dependencies
+import ClipboardJS from 'clipboard';
 new ClipboardJS('.clip')
 
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
+// ready? let's go!
+app.mount('#app');
