@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import ClipboardJS from '../node_modules/clipboard/dist/clipboard.min.js'
+import ClipboardJS from 'clipboard'
 
 Vue.config.productionTip = false
 Vue.prototype.$version = process.env.VUE_APP_VERSION

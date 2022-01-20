@@ -82,7 +82,7 @@
                     <li v-for="t in mtasks" :key="t">{{ t }}</li>
                   </ul>
                   <button class="btn clip" :class="{ 'btn-success': copied.mlist }" data-clipboard-target="#mlist" @click="copied.mlist = true; copied.dlist = false">
-                    <span v-if="!copied.mlist">Kopieren</span>
+                    <template v-if="!copied.mlist">Kopieren</template>
                     <i v-else class="icon icon-check"></i>
                   </button>
                 </div>
@@ -92,7 +92,7 @@
                     <li v-for="t in dtasks" :key="t">{{ t }}</li>
                   </ul>
                   <button class="btn clip" :class="{ 'btn-success': copied.dlist }" data-clipboard-target="#dlist" @click="copied.dlist = true; copied.mlist = false">
-                    <span v-if="!copied.dlist">Kopieren</span>
+                    <template v-if="!copied.dlist">Kopieren</template>
                     <i v-else class="icon icon-check"></i>
                   </button>
                 </div>
