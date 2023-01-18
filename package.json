@@ -12,9 +12,9 @@
     "vue": "^3.2.27"
   },
   "devDependencies": {
+    "@babel/core": "7.20.2",
     "@vue/cli-plugin-babel": "^5.0.8",
-    "@vue/cli-service": "^5.0.8",
-    "@babel/core": "7.20.2"
+    "@vue/cli-service": "^5.0.8"
   },
   "browserslist": [
     "> 1%",
@@ -23,7 +23,7 @@
   ],
   "babel": {
     "presets": [
-      "@vue/app"
+      "@vue/cli-plugin-babel/preset"
     ]
   }
 }
