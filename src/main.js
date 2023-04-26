@@ -4,7 +4,7 @@ import App from '@/App.vue';
 const app = createApp(App);
 
 // set global properties
-app.config.globalProperties.$version = process.env.VUE_APP_VERSION;
+app.config.globalProperties.$version = APP_VERSION;
 
 // init dependencies
 import ClipboardJS from 'clipboard';
