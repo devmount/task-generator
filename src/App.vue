@@ -213,8 +213,8 @@ export default defineComponent({
 </script>
 
 <style>
-@import '~spectre.css/dist/spectre.min.css';
-@import '~spectre.css/dist/spectre-icons.min.css';
+@import 'spectre.css/dist/spectre.min.css';
+@import 'spectre.css/dist/spectre-icons.min.css';
 
 #app {
   margin-top: 2em;

@@ -3,8 +3,9 @@
   "version": "0.3.2",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "dependencies": {
     "clipboard": "^2.0.1",
@@ -12,18 +13,12 @@
     "vue": "^3.2.27"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.2",
-    "@vue/cli-plugin-babel": "^5.0.8",
-    "@vue/cli-service": "^5.0.8"
+    "@vitejs/plugin-vue": "^4.2.1",
+    "vite": "^4.3.2"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ],
-  "babel": {
-    "presets": [
-      "@vue/cli-plugin-babel/preset"
-    ]
-  }
+  ]
 }
