@@ -18,11 +18,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 17.x
-    - name: Build app using Yarn
+    - name: Build app
       run: |
-        npm install -g yarn
-        yarn install
-        yarn build
+        npm install
+        npm run build
     - name: Push Build files to production
       uses: burnett01/rsync-deployments@5.2
       with:
