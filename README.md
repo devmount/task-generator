@@ -21,21 +21,21 @@ A web app to generate simple multiplication and division tasks.
     git clone https://github.com/devmount/task-generator
     ```
 
-2. Install all dependencies using [Yarn](https://yarnpkg.com)
+2. Install dependencies
 
     ```bash
     cd task-generator
-    yarn
+    npm install
     ```
 
 3. Either start the development server with hot reload at localhost:8080 ...
 
     ```bash
-    yarn dev
+    npm run dev
     ```
 
 4. ... or create a production build with minification
 
     ```bash
-    yarn build
+    npm run build
     ```
