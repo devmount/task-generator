@@ -1,134 +1,101 @@
 <template>
-  <div id="app">
+  <h1 class="text-center m-0">Aufgaben-Generator</h1>
+  <main class="grid grid-cols-2 gap-8">
+    <section>
+      <h3 class="text-center">Einstellung</h3>
+
+      <div class="card">
+        <h5>Zahlenbereich 1. Faktor / Divisor</h5>
+        <div class="input-group">
+          <span class="affix">Von</span>
+          <input class="w-full" v-model="min1" type="number" placeholder="z.B. 1">
+          <span class="affix">bis</span>
+          <input class="w-full" v-model="max1" type="number" placeholder="z.B. 10">
+        </div>
+
+        <h5>Zahlenbereich 2. Faktor / Quotient</h5>
+        <div class="input-group">
+          <span class="affix">Von</span>
+          <input class="w-full" v-model="min2" type="number" placeholder="z.B. 1">
+          <span class="affix">bis</span>
+          <input class="w-full" v-model="max2" type="number" placeholder="z.B. 10">
+        </div>
+
+        <h5>Anzahl der Aufgaben</h5>
+        <div class="flex justify-between">
+          <input @keyup.enter="generateTasks" v-model="number" type="number" placeholder="z.B. 20">
+          <button @click="generateTasks">
+            Start
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon"><path d="M9 6l6 6l-6 6" /></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="flex-col">
+      <h3 class="text-center">Ausgabe</h3>
+
+      <div v-if="!result" class="state empty rounded text-center grow">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3a3 3 0 0 0 -3 3v12a3 3 0 0 0 3 3" /><path d="M6 3a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3" /><path d="M13 7h7a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-7" /><path d="M5 7h-1a1 1 0 0 0 -1 1v8a1 1 0 0 0 1 1h1" /><path d="M17 12h.01" /><path d="M13 12h.01" /></svg>
+        <h4>Noch kein Ergebnis verfügbar</h4>
+        <p>Fülle das Formular aus und klicke auf <span class="text-italic">Start</span>,<br />um Aufgaben zu generieren.</p>
+      </div>
+
+      <div v-else class="card grow">
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <h5>Multiplikation</h5>
+            <ul id="mlist" class="list-none p-0 font-mono">
+              <li v-for="t in mtasks" :key="t">{{ t }}</li>
+            </ul>
+            <button
+              class="hollow neutral clip"
+              :class="{ 'success': copied.mlist }"
+              data-clipboard-target="#mlist"
+              @click="copied.mlist = true; copied.dlist = false"
+            >
+              <template v-if="!copied.mlist">Kopieren</template>
+              <template v-else>Kopiert!</template>
+            </button>
+          </div>
+          <div>
+            <h5>Division</h5>
+            <ul id="dlist" class="list-none p-0 font-mono">
+              <li v-for="t in dtasks" :key="t">{{ t }}</li>
+            </ul>
+            <button
+              class="hollow neutral clip"
+              :class="{ 'success': copied.dlist }"
+              data-clipboard-target="#dlist"
+              @click="copied.dlist = true; copied.mlist = false"
+            >
+              <template v-if="!copied.dlist">Kopieren</template>
+              <template v-else>Kopiert!</template>
+            </button>
+          </div>
+        </div>
+
+        <div v-if="number > maxnumber" class="columns mt-3">
+          <p>Maximale Aufgabenzahl erreicht ({{ maxnumber }} Kombinationen möglich)</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="mt-auto">
     <div class="container grid-lg">
       <div class="columns">
-        <div class="column col-12 text-center mb-2">
-          <h1>Aufgaben-Generator</h1>
-        </div>
-      </div>
-      <div class="columns">
-        <div class="column col-6 col-md-12">
-          <h3 class="text-center">Einstellung</h3>
-
-          <div class="card">
-            <div class="card-body">
-
-              <h5>Zahlenbereich 1. Faktor / Divisor</h5>
-              <div class="columns">
-                <div class="column col-6">
-                  <div class="input-group" :class="{ 'has-error': error.min1 }">
-                    <span class="input-group-addon addon-lg">Von</span>
-                    <input class="form-input input-lg" v-model="min1" type="number" placeholder="z.B. 1">
-                  </div>
-                </div>
-                <div class="column col-6">
-                  <div class="input-group" :class="{ 'has-error': error.max1 }">
-                    <span class="input-group-addon addon-lg">Bis</span>
-                    <input class="form-input input-lg" v-model="max1" type="number" placeholder="z.B. 10">
-                  </div>
-                </div>
-              </div>
-
-              <h5 class="mt-3">Zahlenbereich 2. Faktor / Quotient</h5>
-              <div class="columns">
-                <div class="column col-6">
-                  <div class="input-group" :class="{ 'has-error': error.min2 }">
-                    <span class="input-group-addon addon-lg">Von</span>
-                    <input class="form-input input-lg" v-model="min2" type="number" placeholder="z.B. 1">
-                  </div>
-                </div>
-                <div class="column col-6">
-                  <div class="input-group" :class="{ 'has-error': error.max2 }">
-                    <span class="input-group-addon addon-lg">Bis</span>
-                    <input class="form-input input-lg" v-model="max2" type="number" placeholder="z.B. 10">
-                  </div>
-                </div>
-              </div>
-
-              <h5 class="mt-3">Anzahl der Aufgaben</h5>
-              <div class="columns">
-                <div class="column col-6">
-                  <div class="form-group" :class="{ 'has-error': error.number }">
-                    <input class="form-input input-lg" v-model="number" type="number" placeholder="z.B. 20">
-                  </div>
-                </div>
-                <div class="column col-6">
-                  <div class="form-group">
-                    <button class="btn btn-primary float-right btn-lg" @click="generateTasks">Start <i class="icon icon-arrow-right"></i></button>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-        <div class="column col-6 col-md-12">
-          <h3 class="text-center">Ausgabe</h3>
-
-          <div class="empty output" v-if="!result">
-            <div class="empty-icon">
-              <i class="icon icon-3x icon-stop"></i>
-            </div>
-            <p class="empty-title h5">Noch kein Ergebnis verfügbar</p>
-            <p class="empty-subtitle">Fülle das Formular aus und klicke auf <span class="text-italic">Start</span>,<br />um Aufgaben zu generieren.</p>
-          </div>
-          <div class="card output" v-else>
-            <div class="card-body">
-              <div class="columns">
-                <div class="column col-6">
-                  <h5>Multiplikation</h5>
-                  <ul id="mlist">
-                    <li v-for="t in mtasks" :key="t">{{ t }}</li>
-                  </ul>
-                  <button class="btn clip" :class="{ 'btn-success': copied.mlist }" data-clipboard-target="#mlist" @click="copied.mlist = true; copied.dlist = false">
-                    <template v-if="!copied.mlist">Kopieren</template>
-                    <i v-else class="icon icon-check"></i>
-                  </button>
-                </div>
-                <div class="column col-6">
-                  <h5>Division</h5>
-                  <ul id="dlist">
-                    <li v-for="t in dtasks" :key="t">{{ t }}</li>
-                  </ul>
-                  <button class="btn clip" :class="{ 'btn-success': copied.dlist }" data-clipboard-target="#dlist" @click="copied.dlist = true; copied.mlist = false">
-                    <template v-if="!copied.dlist">Kopieren</template>
-                    <i v-else class="icon icon-check"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="columns mt-3" v-if="number > maxnumber">
-                <div class="column col-12">
-                  <p>Maximale Aufgabenzahl erreicht ({{ maxnumber }} Kombinationen möglich)</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div class="columns mt-3 pb-5">
-        <div class="column col-12">
+        <div class="column col-12 text-center text-gray">
           <p>Alle Angaben und Ergebnisse ohne Gewähr</p>
+          <p>
+            <span class="d-block">v{{ $version }}</span>
+            Created by <a href="https://twitter.com/devmount" target="_blank">Andreas Müller</a>.
+            Download on <a href="https://github.com/devmount/task-generator" target="_blank">GitHub</a>.
+          </p>
         </div>
       </div>
     </div>
-
-    <footer>
-      <div class="container grid-lg">
-        <div class="columns">
-          <div class="column col-12 text-center text-gray">
-            <p>
-              <span class="d-block">v{{ $version }}</span>
-              Created by <a href="https://twitter.com/devmount" target="_blank">Andreas Müller</a>.
-              Download on <a href="https://github.com/devmount/task-generator" target="_blank">GitHub</a>.
-            </p>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-  </div>
+  </footer>
 </template>
 
 <script>
@@ -213,41 +180,19 @@ export default defineComponent({
 </script>
 
 <style>
-@import 'spectre.css/dist/spectre.min.css';
-@import 'spectre.css/dist/spectre-icons.min.css';
+@import '@devmount/sloth.css/sloth.min.css';
 
 #app {
-  margin-top: 2em;
-  min-height: calc(100vh - 3em);
-  position: relative;
+  min-height: calc(100vh - 3rem);
 }
-#app footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+
+.mt-auto {
+  margin-top: auto;
 }
-#app footer p {
-  color: #bcc3ce;
+.grow {
+  flex-grow: 1;
 }
-#app footer a {
-  color: #8c8a89;
-}
-#app ul {
-  list-style-type: none;
-  margin-left: 0;
-  font-family: "SF Mono", "Segoe UI Mono", "Roboto Mono", Menlo, Courier, monospace;
-  line-height: 1.2;
-}
-#app .mt-3 {
-  margin-top: 1em;
-}
-#app .pb-5 {
-  padding-bottom: 5em;
-}
-#app .output {
-  min-height: 296px;
-}
-#app .clip {
-  min-width: 100px;
+.list-none {
+	list-style-type: none;  
 }
 </style>

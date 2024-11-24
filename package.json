@@ -8,8 +8,8 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@devmount/sloth.css": "^0.3.0",
     "clipboard": "^2.0.1",
-    "spectre.css": "^0.5.4",
     "vue": "^3.2.27"
   },
   "devDependencies": {
