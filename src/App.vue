@@ -82,19 +82,13 @@
     </section>
   </main>
 
-  <footer class="mt-auto">
-    <div class="container grid-lg">
-      <div class="columns">
-        <div class="column col-12 text-center text-gray">
-          <p>Alle Angaben und Ergebnisse ohne Gewähr</p>
-          <p>
-            <span class="d-block">v{{ $version }}</span>
-            Created by <a href="https://twitter.com/devmount" target="_blank">Andreas Müller</a>.
-            Download on <a href="https://github.com/devmount/task-generator" target="_blank">GitHub</a>.
-          </p>
-        </div>
-      </div>
-    </div>
+  <footer class="mt-auto text-center text-muted">
+    <p>Alle Angaben und Ergebnisse ohne Gewähr</p>
+    <p>
+      <span class="block">v{{ $version }}</span>
+      Created by <a href="https://twitter.com/devmount" target="_blank">Andreas Müller</a>.
+      Download on <a href="https://github.com/devmount/task-generator" target="_blank">GitHub</a>.
+    </p>
   </footer>
 </template>
 
@@ -181,6 +175,10 @@ export default defineComponent({
 
 <style>
 @import '@devmount/sloth.css/sloth.min.css';
+
+:root {
+  --color-accent: #f57c00;
+}
 
 #app {
   min-height: calc(100vh - 3rem);
