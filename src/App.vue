@@ -4,32 +4,32 @@
     <section>
       <h3 class="text-center">Einstellung</h3>
 
-      <div class="card">
+      <form class="card" @submit="generateTasks">
         <h5>Zahlenbereich 1. Faktor / Divisor</h5>
         <div class="input-group">
           <span class="affix">Von</span>
-          <input class="w-full" v-model="min1" type="number" placeholder="z.B. 1">
+          <input class="w-full" v-model="min1" type="number" placeholder="z.B. 1" required>
           <span class="affix">bis</span>
-          <input class="w-full" v-model="max1" type="number" placeholder="z.B. 10">
+          <input class="w-full" v-model="max1" type="number" placeholder="z.B. 10" required>
         </div>
 
         <h5>Zahlenbereich 2. Faktor / Quotient</h5>
         <div class="input-group">
           <span class="affix">Von</span>
-          <input class="w-full" v-model="min2" type="number" placeholder="z.B. 1">
+          <input class="w-full" v-model="min2" type="number" placeholder="z.B. 1" required>
           <span class="affix">bis</span>
-          <input class="w-full" v-model="max2" type="number" placeholder="z.B. 10">
+          <input class="w-full" v-model="max2" type="number" placeholder="z.B. 10" required>
         </div>
 
         <h5>Anzahl der Aufgaben</h5>
         <div class="flex justify-between">
-          <input @keyup.enter="generateTasks" v-model="number" type="number" placeholder="z.B. 20">
-          <button @click="generateTasks">
+          <input v-model="number" type="number" placeholder="z.B. 20" required>
+          <button type="submit">
             Start
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon"><path d="M9 6l6 6l-6 6" /></svg>
           </button>
         </div>
-      </div>
+      </form>
     </section>
 
     <section class="flex-col">
@@ -177,7 +177,7 @@ export default defineComponent({
 @import '@devmount/sloth.css/sloth.min.css';
 
 :root {
-  --color-accent: #f57c00;
+  --color-accent: #3466b5;
 }
 
 #app {
