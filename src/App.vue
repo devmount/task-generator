@@ -52,7 +52,7 @@
         <div class="grid grid-cols-2 gap-2">
           <div>
             <h5>Multiplikation</h5>
-            <ul id="mlist" class="list-none p-0 font-mono">
+            <ul class="list-none p-0 font-mono">
               <li v-for="t in mtasks" :key="t">{{ t }}</li>
             </ul>
             <button class="hollow neutral clip" :class="{ 'success': copied.mlist }" @click="copy('M')">
