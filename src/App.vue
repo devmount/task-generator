@@ -30,7 +30,7 @@
           </button>
         </div>
 
-        <div v-if="number > maxnumber">
+        <div v-if="result && number > maxnumber">
           <hr />
           <div class="callout accent">
             <p>Maximale Aufgabenzahl erreicht ({{ maxnumber }} Kombinationen möglich)</p>
@@ -109,40 +109,45 @@ export default defineComponent({
   },
   methods: {
     generateTasks () {
-      this.result = true
-      this.copied.mlist = false, this.copied.dlist = false
+      this.result = true;
+      this.copied.mlist = false;
+      this.copied.dlist = false;
       // init lists, integerify inputs
-      this.mtasks = [], this.dtasks = []
-      this.min1 = Number(this.min1), this.max1 = Number(this.max1), this.min2 = Number(this.min2), this.max2 = Number(this.max2)
+      this.mtasks = [];
+      this.dtasks = [];
+      this.min1 = Number(this.min1);
+      this.max1 = Number(this.max1);
+      this.min2 = Number(this.min2);
+      this.max2 = Number(this.max2);
       // handle too high task number
-      this.maxnumber = (Math.abs(this.min1-this.max1)+1)*(Math.abs(this.min2-this.max2)+1)
+      this.maxnumber = (Math.abs(this.min1 - this.max1) + 1) * (Math.abs(this.min2 - this.max2) + 1)
       if (this.number > this.maxnumber) {
         this.number = this.maxnumber
       }
-      var a, b, r, task
+      let a, b, r, task;
       // generate multiplication tasks
       while (this.mtasks.length < this.number) {
-        a = Math.floor(Math.random() * (this.max1 - this.min1 + 1)) + this.min1
-        b = Math.floor(Math.random() * (this.max2 - this.min2 + 1)) + this.min2
-        r = a * b
-        task =  a + ' • ' + b + ' = ' + r
+        a = Math.floor(Math.random() * (this.max1 - this.min1 + 1)) + this.min1;
+        b = Math.floor(Math.random() * (this.max2 - this.min2 + 1)) + this.min2;
+        r = a * b;
+        task = a + ' • ' + b + ' = ' + r;
         if (!this.mtasks.includes(task)) {
-          this.mtasks.push(task)
+          this.mtasks.push(task);
         }
       }
       // generate division tasks
       while (this.dtasks.length < this.number) {
-        a = Math.floor(Math.random() * (this.max1 - this.min1 + 1)) + this.min1
-        b = Math.floor(Math.random() * (this.max2 - this.min2 + 1)) + this.min2
-        r = a * b
+        a = Math.floor(Math.random() * (this.max1 - this.min1 + 1)) + this.min1;
+        b = Math.floor(Math.random() * (this.max2 - this.min2 + 1)) + this.min2;
+        r = a * b;
         // check division by zero
         if (b == 0) {
-          r = a
-          a = 'n.l.'
+          r = a;
+          a = 'n.l.';
         }
-        task =  r + ' : ' + b + ' = ' + a
+        task = r + ' : ' + b + ' = ' + a;
         if (!this.dtasks.includes(task)) {
-          this.dtasks.push(task)
+          this.dtasks.push(task);
         }
       }
     },
