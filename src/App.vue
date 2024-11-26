@@ -4,7 +4,7 @@
     <section>
       <h3 class="text-center">Einstellung</h3>
 
-      <form class="card" @submit="generateTasks">
+      <form class="card" @submit.prevent="generateTasks">
         <h5>Zahlenbereich 1. Faktor / Divisor</h5>
         <div class="input-group">
           <span class="affix">Von</span>
@@ -29,6 +29,13 @@
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon"><path d="M9 6l6 6l-6 6" /></svg>
           </button>
         </div>
+
+        <div v-if="number > maxnumber">
+          <hr />
+          <div class="callout accent">
+            <p>Maximale Aufgabenzahl erreicht ({{ maxnumber }} Kombinationen möglich)</p>
+          </div>
+        </div>
       </form>
     </section>
 
@@ -48,35 +55,21 @@
             <ul id="mlist" class="list-none p-0 font-mono">
               <li v-for="t in mtasks" :key="t">{{ t }}</li>
             </ul>
-            <button
-              class="hollow neutral clip"
-              :class="{ 'success': copied.mlist }"
-              data-clipboard-target="#mlist"
-              @click="copied.mlist = true; copied.dlist = false"
-            >
+            <button class="hollow neutral clip" :class="{ 'success': copied.mlist }" @click="copy('M')">
               <template v-if="!copied.mlist">Kopieren</template>
               <template v-else>Kopiert!</template>
             </button>
           </div>
           <div>
             <h5>Division</h5>
-            <ul id="dlist" class="list-none p-0 font-mono">
+            <ul class="list-none p-0 font-mono">
               <li v-for="t in dtasks" :key="t">{{ t }}</li>
             </ul>
-            <button
-              class="hollow neutral clip"
-              :class="{ 'success': copied.dlist }"
-              data-clipboard-target="#dlist"
-              @click="copied.dlist = true; copied.mlist = false"
-            >
+            <button class="hollow neutral clip" :class="{ 'success': copied.dlist }" @click="copy('D')">
               <template v-if="!copied.dlist">Kopieren</template>
               <template v-else>Kopiert!</template>
             </button>
           </div>
-        </div>
-
-        <div v-if="number > maxnumber" class="columns mt-3">
-          <p>Maximale Aufgabenzahl erreicht ({{ maxnumber }} Kombinationen möglich)</p>
         </div>
       </div>
     </section>
@@ -104,13 +97,6 @@ export default defineComponent({
       min2: '',
       max2: '',
       number: '',
-      error: {
-        min1: false,
-        max1: false,
-        min2: false,
-        max2: false,
-        number: false,
-      },
       maxnumber: '',
       mtasks: [],
       dtasks: [],
@@ -123,50 +109,61 @@ export default defineComponent({
   },
   methods: {
     generateTasks () {
-      // check input
-      this.error.min1 = (this.min1 === '') ? true : false
-      this.error.max1 = (this.max1 === '') ? true : false
-      this.error.min2 = (this.min2 === '') ? true : false
-      this.error.max2 = (this.max2 === '') ? true : false
-      this.error.number = (this.number === '') ? true : false
-      // no error occured: create result
-      if (!this.error.min1 && !this.error.max1 && !this.error.min2 && !this.error.max2 && !this.error.number) {
-        this.result = true
-        this.copied.mlist = false, this.copied.dlist = false
-        // init lists, integerify inputs
-        this.mtasks = [], this.dtasks = []
-        this.min1 = Number(this.min1), this.max1 = Number(this.max1), this.min2 = Number(this.min2), this.max2 = Number(this.max2)
-        // handle too high task number
-        this.maxnumber = (Math.abs(this.min1-this.max1)+1)*(Math.abs(this.min2-this.max2)+1)
-        if (this.number > this.maxnumber) {
-          this.number = this.maxnumber
+      this.result = true
+      this.copied.mlist = false, this.copied.dlist = false
+      // init lists, integerify inputs
+      this.mtasks = [], this.dtasks = []
+      this.min1 = Number(this.min1), this.max1 = Number(this.max1), this.min2 = Number(this.min2), this.max2 = Number(this.max2)
+      // handle too high task number
+      this.maxnumber = (Math.abs(this.min1-this.max1)+1)*(Math.abs(this.min2-this.max2)+1)
+      if (this.number > this.maxnumber) {
+        this.number = this.maxnumber
+      }
+      var a, b, r, task
+      // generate multiplication tasks
+      while (this.mtasks.length < this.number) {
+        a = Math.floor(Math.random() * (this.max1 - this.min1 + 1)) + this.min1
+        b = Math.floor(Math.random() * (this.max2 - this.min2 + 1)) + this.min2
+        r = a * b
+        task =  a + ' • ' + b + ' = ' + r
+        if (!this.mtasks.includes(task)) {
+          this.mtasks.push(task)
         }
-        var a, b, r, task
-        // generate multiplication tasks
-        while (this.mtasks.length < this.number) {
-          a = Math.floor(Math.random() * (this.max1 - this.min1 + 1)) + this.min1
-          b = Math.floor(Math.random() * (this.max2 - this.min2 + 1)) + this.min2
-          r = a * b
-          task =  a + ' • ' + b + ' = ' + r
-          if (!this.mtasks.includes(task)) {
-            this.mtasks.push(task)
-          }
+      }
+      // generate division tasks
+      while (this.dtasks.length < this.number) {
+        a = Math.floor(Math.random() * (this.max1 - this.min1 + 1)) + this.min1
+        b = Math.floor(Math.random() * (this.max2 - this.min2 + 1)) + this.min2
+        r = a * b
+        // check division by zero
+        if (b == 0) {
+          r = a
+          a = 'n.l.'
         }
-        // generate division tasks
-        while (this.dtasks.length < this.number) {
-          a = Math.floor(Math.random() * (this.max1 - this.min1 + 1)) + this.min1
-          b = Math.floor(Math.random() * (this.max2 - this.min2 + 1)) + this.min2
-          r = a * b
-          // check division by zero
-          if (b == 0) {
-            r = a
-            a = 'n.l.'
-          }
-          task =  r + ' : ' + b + ' = ' + a
-          if (!this.dtasks.includes(task)) {
-            this.dtasks.push(task)
-          }
+        task =  r + ' : ' + b + ' = ' + a
+        if (!this.dtasks.includes(task)) {
+          this.dtasks.push(task)
         }
+      }
+    },
+    copy (mode) {
+      switch (mode) {
+        case 'M':
+          navigator.clipboard.writeText(this.mtasks.join('\n'));
+          this.copied.mlist = true;
+          setTimeout(() => {
+            this.copied.mlist = false;
+          }, 2000);
+          break;
+        case 'D':
+          navigator.clipboard.writeText(this.dtasks.join('\n'));
+          this.copied.dlist = true;
+          setTimeout(() => {
+            this.copied.dlist = false;
+          }, 2000);
+          break;
+        default:
+          break;
       }
     }
   }

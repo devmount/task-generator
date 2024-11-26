@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@devmount/sloth.css": "^0.3.0",
-    "clipboard": "^2.0.1",
     "vue": "^3.2.27"
   },
   "devDependencies": {
