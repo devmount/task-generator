@@ -189,10 +189,8 @@ export default defineComponent({
 .mt-auto {
   margin-top: auto;
 }
-.grow {
-  flex-grow: 1;
-}
+
 .list-none {
-	list-style-type: none;  
+  list-style-type: none;  
 }
 </style>
