@@ -15,14 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Use Node.js 24
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-      - name: Build app via NPM
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+      - name: Build app
         run: |
-          npm install
-          npm run build
+          pnpm install
+          pnpm run build
       - name: Push Build files to production environment
         uses: burnett01/rsync-deployments@v8
         with:
