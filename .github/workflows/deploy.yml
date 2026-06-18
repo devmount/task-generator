@@ -20,7 +20,7 @@ jobs:
       - name: Build app
         run: |
           pnpm install
-          pnpm run build
+          pnpm build
       - name: Push Build files to production environment
         uses: burnett01/rsync-deployments@v8
         with:
