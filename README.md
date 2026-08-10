@@ -1,8 +1,10 @@
 # Task Generator
 
-A web app to generate simple multiplication and division tasks.
+A web app to generate simple multiplication and division tasks. Built on Vue.js and Sloth.css.
 
 ## Demo
+
+![Screenshot of Task Generator v0.6.0](./docs/task-generator_v0.6.0.png)
 
 <https://tasks.devmount.de>
 
@@ -25,17 +27,17 @@ A web app to generate simple multiplication and division tasks.
 
     ```bash
     cd task-generator
-    npm install
+    pnpm install
     ```
 
 3. Either start the development server with hot reload at localhost:8080 ...
 
     ```bash
-    npm run dev
+    pnpm run dev
     ```
 
 4. ... or create a production build with minification
 
     ```bash
-    npm run build
+    pnpm run build
     ```

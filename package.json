@@ -1,6 +1,6 @@
 {
   "name": "task-generator",
-  "version": "0.5.4",
+  "version": "0.6.0",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -8,7 +8,7 @@
     "serve": "vite preview",
     "lint": "oxlint"
   },
-  "packageManager": "pnpm@11.7.0",
+  "packageManager": "pnpm@11.21.0",
   "dependencies": {
     "@devmount/sloth.css": "^0.4.2",
     "vue": "^3.5.41",
