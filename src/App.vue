@@ -1,3 +1,86 @@
+<script setup>
+import { ref, reactive } from 'vue';
+
+const min1 = ref('');
+const max1 = ref('');
+const min2 = ref('');
+const max2 = ref('');
+const number = ref('');
+const maxnumber = ref('');
+const mtasks = ref([]);
+const dtasks = ref([]);
+const result = ref(false);
+const copied = reactive({
+  mlist: false,
+  dlist: false,
+});
+
+const generateTasks = () => {
+  result.value = true;
+  copied.mlist = false;
+  copied.dlist = false;
+  // init lists, integerify inputs
+  mtasks.value = [];
+  dtasks.value = [];
+  min1.value = Number(min1.value);
+  max1.value = Number(max1.value);
+  min2.value = Number(min2.value);
+  max2.value = Number(max2.value);
+  // handle too high task number
+  maxnumber.value = (Math.abs(min1.value - max1.value) + 1) * (Math.abs(min2.value - max2.value) + 1)
+  if (number.value > maxnumber.value) {
+    number.value = maxnumber.value
+  }
+  let a, b, r, task;
+  // generate multiplication tasks
+  while (mtasks.value.length < number.value) {
+    a = Math.floor(Math.random() * (max1.value - min1.value + 1)) + min1.value;
+    b = Math.floor(Math.random() * (max2.value - min2.value + 1)) + min2.value;
+    r = a * b;
+    task = a + ' • ' + b + ' = ' + r;
+    if (!mtasks.value.includes(task)) {
+      mtasks.value.push(task);
+    }
+  }
+  // generate division tasks
+  while (dtasks.value.length < number.value) {
+    a = Math.floor(Math.random() * (max1.value - min1.value + 1)) + min1.value;
+    b = Math.floor(Math.random() * (max2.value - min2.value + 1)) + min2.value;
+    r = a * b;
+    // check division by zero
+    if (b == 0) {
+      r = a;
+      a = 'n.l.';
+    }
+    task = r + ' : ' + b + ' = ' + a;
+    if (!dtasks.value.includes(task)) {
+      dtasks.value.push(task);
+    }
+  }
+}
+
+const copy = (mode) => {
+  switch (mode) {
+    case 'M':
+      navigator.clipboard.writeText(mtasks.value.join('\n'));
+      copied.mlist = true;
+      setTimeout(() => {
+        copied.mlist = false;
+      }, 2000);
+      break;
+    case 'D':
+      navigator.clipboard.writeText(dtasks.value.join('\n'));
+      copied.dlist = true;
+      setTimeout(() => {
+        copied.dlist = false;
+      }, 2000);
+      break;
+    default:
+      break;
+  }
+}
+</script>
+
 <template>
   <h1 class="text-center m-0">Aufgaben-Generator</h1>
   <main class="grid grid-cols-2 gap-8">
@@ -84,89 +167,6 @@
     </p>
   </footer>
 </template>
-
-<script setup>
-import { ref, reactive } from 'vue';
-
-const min1 = ref('');
-const max1 = ref('');
-const min2 = ref('');
-const max2 = ref('');
-const number = ref('');
-const maxnumber = ref('');
-const mtasks = ref([]);
-const dtasks = ref([]);
-const result = ref(false);
-const copied = reactive({
-  mlist: false,
-  dlist: false,
-});
-
-const generateTasks = () => {
-  result.value = true;
-  copied.mlist = false;
-  copied.dlist = false;
-  // init lists, integerify inputs
-  mtasks.value = [];
-  dtasks.value = [];
-  min1.value = Number(min1.value);
-  max1.value = Number(max1.value);
-  min2.value = Number(min2.value);
-  max2.value = Number(max2.value);
-  // handle too high task number
-  maxnumber.value = (Math.abs(min1.value - max1.value) + 1) * (Math.abs(min2.value - max2.value) + 1)
-  if (number.value > maxnumber.value) {
-    number.value = maxnumber.value
-  }
-  let a, b, r, task;
-  // generate multiplication tasks
-  while (mtasks.value.length < number.value) {
-    a = Math.floor(Math.random() * (max1.value - min1.value + 1)) + min1.value;
-    b = Math.floor(Math.random() * (max2.value - min2.value + 1)) + min2.value;
-    r = a * b;
-    task = a + ' • ' + b + ' = ' + r;
-    if (!mtasks.value.includes(task)) {
-      mtasks.value.push(task);
-    }
-  }
-  // generate division tasks
-  while (dtasks.value.length < number.value) {
-    a = Math.floor(Math.random() * (max1.value - min1.value + 1)) + min1.value;
-    b = Math.floor(Math.random() * (max2.value - min2.value + 1)) + min2.value;
-    r = a * b;
-    // check division by zero
-    if (b == 0) {
-      r = a;
-      a = 'n.l.';
-    }
-    task = r + ' : ' + b + ' = ' + a;
-    if (!dtasks.value.includes(task)) {
-      dtasks.value.push(task);
-    }
-  }
-}
-
-const copy = (mode) => {
-  switch (mode) {
-    case 'M':
-      navigator.clipboard.writeText(mtasks.value.join('\n'));
-      copied.mlist = true;
-      setTimeout(() => {
-        copied.mlist = false;
-      }, 2000);
-      break;
-    case 'D':
-      navigator.clipboard.writeText(dtasks.value.join('\n'));
-      copied.dlist = true;
-      setTimeout(() => {
-        copied.dlist = false;
-      }, 2000);
-      break;
-    default:
-      break;
-  }
-}
-</script>
 
 <style>
 @import '@devmount/sloth.css/sloth.min.css';
