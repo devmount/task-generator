@@ -145,7 +145,7 @@ watch(locale, (val) => {
           <path d="M13 12h.01" />
         </svg>
         <h4>{{ t('output.emptyTitle') }}</h4>
-        <i18n-t keypath="output.emptyText" tag="p">
+        <i18n-t keypath="output.emptyText" tag="p" scope="global">
           <template #start><i>{{ t('settings.start') }}</i></template>
         </i18n-t>
       </div>
