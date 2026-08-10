@@ -1,0 +1,31 @@
+{
+  "title": "Task Generator",
+  "settings": {
+    "heading": "Settings",
+    "range1": "Number range 1st factor / divisor",
+    "range2": "Number range 2nd factor / quotient",
+    "count": "Number of tasks",
+    "from": "From",
+    "to": "to",
+    "placeholderMin": "e.g. 1",
+    "placeholderMax": "e.g. 10",
+    "placeholderCount": "e.g. 20",
+    "start": "Start",
+    "maxReached": "Maximum number of tasks reached ({count} combinations possible)"
+  },
+  "output": {
+    "heading": "Output",
+    "emptyTitle": "No result available yet",
+    "emptyText": "Fill out the form and click {start} to generate tasks.",
+    "multiplication": "Multiplication",
+    "division": "Division",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "notDefined": "n/a"
+  },
+  "footer": {
+    "disclaimer": "All data and results without guarantee",
+    "createdBy": "Created by",
+    "downloadOn": "Download on"
+  }
+}
