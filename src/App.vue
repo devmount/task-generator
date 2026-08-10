@@ -174,20 +174,20 @@ watch(locale, (val) => {
           </div>
         </div>
       </div>
+      <p class="text-xs text-end text-muted">{{ t('footer.disclaimer') }}</p>
     </section>
   </main>
 
   <footer class="mt-auto text-center text-muted">
-    <p>
+    <p class="flex-center gap-8">
+      <span class="font-mono">v{{ $version }}</span>
       <select class="sm" v-model="locale">
         <option value="de">Deutsch</option>
         <option value="en">English</option>
       </select>
     </p>
-    <p>{{ t('footer.disclaimer') }}</p>
     <p>
-      <pre>v{{ $version }}</pre>
-      {{ t('footer.createdBy') }} <a href="https://twitter.com/devmount" target="_blank">Andreas Müller</a>.
+      {{ t('footer.createdBy') }} <a href="https://github.com/devmount" target="_blank">Andreas</a>.
       {{ t('footer.downloadOn') }} <a href="https://github.com/devmount/task-generator" target="_blank">GitHub</a>.
     </p>
   </footer>
