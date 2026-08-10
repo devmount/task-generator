@@ -85,94 +85,87 @@
   </footer>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
+<script setup>
+import { ref, reactive } from 'vue';
 
-export default defineComponent({
-  name: 'app',
-  data () {
-    return {
-      min1: '',
-      max1: '',
-      min2: '',
-      max2: '',
-      number: '',
-      maxnumber: '',
-      mtasks: [],
-      dtasks: [],
-      result: false,
-      copied: {
-        mlist: false,
-        dlist: false,
-      }
-    }
-  },
-  methods: {
-    generateTasks () {
-      this.result = true;
-      this.copied.mlist = false;
-      this.copied.dlist = false;
-      // init lists, integerify inputs
-      this.mtasks = [];
-      this.dtasks = [];
-      this.min1 = Number(this.min1);
-      this.max1 = Number(this.max1);
-      this.min2 = Number(this.min2);
-      this.max2 = Number(this.max2);
-      // handle too high task number
-      this.maxnumber = (Math.abs(this.min1 - this.max1) + 1) * (Math.abs(this.min2 - this.max2) + 1)
-      if (this.number > this.maxnumber) {
-        this.number = this.maxnumber
-      }
-      let a, b, r, task;
-      // generate multiplication tasks
-      while (this.mtasks.length < this.number) {
-        a = Math.floor(Math.random() * (this.max1 - this.min1 + 1)) + this.min1;
-        b = Math.floor(Math.random() * (this.max2 - this.min2 + 1)) + this.min2;
-        r = a * b;
-        task = a + ' • ' + b + ' = ' + r;
-        if (!this.mtasks.includes(task)) {
-          this.mtasks.push(task);
-        }
-      }
-      // generate division tasks
-      while (this.dtasks.length < this.number) {
-        a = Math.floor(Math.random() * (this.max1 - this.min1 + 1)) + this.min1;
-        b = Math.floor(Math.random() * (this.max2 - this.min2 + 1)) + this.min2;
-        r = a * b;
-        // check division by zero
-        if (b == 0) {
-          r = a;
-          a = 'n.l.';
-        }
-        task = r + ' : ' + b + ' = ' + a;
-        if (!this.dtasks.includes(task)) {
-          this.dtasks.push(task);
-        }
-      }
-    },
-    copy (mode) {
-      switch (mode) {
-        case 'M':
-          navigator.clipboard.writeText(this.mtasks.join('\n'));
-          this.copied.mlist = true;
-          setTimeout(() => {
-            this.copied.mlist = false;
-          }, 2000);
-          break;
-        case 'D':
-          navigator.clipboard.writeText(this.dtasks.join('\n'));
-          this.copied.dlist = true;
-          setTimeout(() => {
-            this.copied.dlist = false;
-          }, 2000);
-          break;
-        default:
-          break;
-      }
+const min1 = ref('');
+const max1 = ref('');
+const min2 = ref('');
+const max2 = ref('');
+const number = ref('');
+const maxnumber = ref('');
+const mtasks = ref([]);
+const dtasks = ref([]);
+const result = ref(false);
+const copied = reactive({
+  mlist: false,
+  dlist: false,
+});
+
+const generateTasks = () => {
+  result.value = true;
+  copied.mlist = false;
+  copied.dlist = false;
+  // init lists, integerify inputs
+  mtasks.value = [];
+  dtasks.value = [];
+  min1.value = Number(min1.value);
+  max1.value = Number(max1.value);
+  min2.value = Number(min2.value);
+  max2.value = Number(max2.value);
+  // handle too high task number
+  maxnumber.value = (Math.abs(min1.value - max1.value) + 1) * (Math.abs(min2.value - max2.value) + 1)
+  if (number.value > maxnumber.value) {
+    number.value = maxnumber.value
+  }
+  let a, b, r, task;
+  // generate multiplication tasks
+  while (mtasks.value.length < number.value) {
+    a = Math.floor(Math.random() * (max1.value - min1.value + 1)) + min1.value;
+    b = Math.floor(Math.random() * (max2.value - min2.value + 1)) + min2.value;
+    r = a * b;
+    task = a + ' • ' + b + ' = ' + r;
+    if (!mtasks.value.includes(task)) {
+      mtasks.value.push(task);
     }
   }
-});
+  // generate division tasks
+  while (dtasks.value.length < number.value) {
+    a = Math.floor(Math.random() * (max1.value - min1.value + 1)) + min1.value;
+    b = Math.floor(Math.random() * (max2.value - min2.value + 1)) + min2.value;
+    r = a * b;
+    // check division by zero
+    if (b == 0) {
+      r = a;
+      a = 'n.l.';
+    }
+    task = r + ' : ' + b + ' = ' + a;
+    if (!dtasks.value.includes(task)) {
+      dtasks.value.push(task);
+    }
+  }
+}
+
+const copy = (mode) => {
+  switch (mode) {
+    case 'M':
+      navigator.clipboard.writeText(mtasks.value.join('\n'));
+      copied.mlist = true;
+      setTimeout(() => {
+        copied.mlist = false;
+      }, 2000);
+      break;
+    case 'D':
+      navigator.clipboard.writeText(dtasks.value.join('\n'));
+      copied.dlist = true;
+      setTimeout(() => {
+        copied.dlist = false;
+      }, 2000);
+      break;
+    default:
+      break;
+  }
+}
 </script>
 
 <style>
