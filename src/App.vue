@@ -1,5 +1,8 @@
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t, locale } = useI18n({ useScope: 'global' });
 
 const min1 = ref('');
 const max1 = ref('');
@@ -50,7 +53,7 @@ const generateTasks = () => {
     // check division by zero
     if (b == 0) {
       r = a;
-      a = 'n.l.';
+      a = t('output.notDefined');
     }
     task = r + ' : ' + b + ' = ' + a;
     if (!dtasks.value.includes(task)) {
@@ -79,36 +82,42 @@ const copy = (mode) => {
       break;
   }
 }
+
+watch(locale, (val) => {
+  localStorage.setItem('locale', val);
+  document.documentElement.lang = val;
+  document.title = t('title');
+}, { immediate: true });
 </script>
 
 <template>
-  <h1 class="text-center m-0">Aufgaben-Generator</h1>
+  <h1 class="text-center m-0">{{ t('title') }}</h1>
   <main class="grid grid-cols-2 gap-8">
     <section>
-      <h3 class="text-center">Einstellung</h3>
+      <h3 class="text-center">{{ t('settings.heading') }}</h3>
 
       <form class="card" @submit.prevent="generateTasks">
-        <h5>Zahlenbereich 1. Faktor / Divisor</h5>
+        <h5>{{ t('settings.range1') }}</h5>
         <div class="input-group">
-          <span class="affix">Von</span>
-          <input class="w-full" v-model="min1" type="number" placeholder="z.B. 1" required>
-          <span class="affix">bis</span>
-          <input class="w-full" v-model="max1" type="number" placeholder="z.B. 10" required>
+          <span class="affix">{{ t('settings.from') }}</span>
+          <input class="w-full" v-model="min1" type="number" :placeholder="t('settings.placeholderMin')" required>
+          <span class="affix">{{ t('settings.to') }}</span>
+          <input class="w-full" v-model="max1" type="number" :placeholder="t('settings.placeholderMax')" required>
         </div>
 
-        <h5>Zahlenbereich 2. Faktor / Quotient</h5>
+        <h5>{{ t('settings.range2') }}</h5>
         <div class="input-group">
-          <span class="affix">Von</span>
-          <input class="w-full" v-model="min2" type="number" placeholder="z.B. 1" required>
-          <span class="affix">bis</span>
-          <input class="w-full" v-model="max2" type="number" placeholder="z.B. 10" required>
+          <span class="affix">{{ t('settings.from') }}</span>
+          <input class="w-full" v-model="min2" type="number" :placeholder="t('settings.placeholderMin')" required>
+          <span class="affix">{{ t('settings.to') }}</span>
+          <input class="w-full" v-model="max2" type="number" :placeholder="t('settings.placeholderMax')" required>
         </div>
 
-        <h5>Anzahl der Aufgaben</h5>
+        <h5>{{ t('settings.count') }}</h5>
         <div class="flex justify-between">
-          <input v-model="number" type="number" placeholder="z.B. 20" required>
+          <input v-model="number" type="number" :placeholder="t('settings.placeholderCount')" required>
           <button type="submit">
-            Start
+            {{ t('settings.start') }}
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon"><path d="M9 6l6 6l-6 6" /></svg>
           </button>
         </div>
@@ -116,41 +125,51 @@ const copy = (mode) => {
         <div v-if="result && number > maxnumber">
           <hr />
           <div class="callout accent">
-            <p>Maximale Aufgabenzahl erreicht ({{ maxnumber }} Kombinationen möglich)</p>
+            <p>{{ t('settings.maxReached', { count: maxnumber }) }}</p>
           </div>
         </div>
       </form>
     </section>
 
     <section class="flex-col">
-      <h3 class="text-center">Ausgabe</h3>
+      <h3 class="text-center">{{ t('output.heading') }}</h3>
 
       <div v-if="!result" class="state empty rounded text-center grow">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3a3 3 0 0 0 -3 3v12a3 3 0 0 0 3 3" /><path d="M6 3a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3" /><path d="M13 7h7a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-7" /><path d="M5 7h-1a1 1 0 0 0 -1 1v8a1 1 0 0 0 1 1h1" /><path d="M17 12h.01" /><path d="M13 12h.01" /></svg>
-        <h4>Noch kein Ergebnis verfügbar</h4>
-        <p>Fülle das Formular aus und klicke auf <span class="text-italic">Start</span>,<br />um Aufgaben zu generieren.</p>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M12 3a3 3 0 0 0 -3 3v12a3 3 0 0 0 3 3" />
+          <path d="M6 3a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3" />
+          <path d="M13 7h7a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-7" />
+          <path d="M5 7h-1a1 1 0 0 0 -1 1v8a1 1 0 0 0 1 1h1" />
+          <path d="M17 12h.01" />
+          <path d="M13 12h.01" />
+        </svg>
+        <h4>{{ t('output.emptyTitle') }}</h4>
+        <i18n-t keypath="output.emptyText" tag="p">
+          <template #start><i>{{ t('settings.start') }}</i></template>
+        </i18n-t>
       </div>
 
       <div v-else class="card grow">
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <h5>Multiplikation</h5>
+            <h5>{{ t('output.multiplication') }}</h5>
             <ul class="list-none p-0 font-mono">
-              <li v-for="t in mtasks" :key="t">{{ t }}</li>
+              <li v-for="mt in mtasks" :key="mt">{{ mt }}</li>
             </ul>
             <button class="hollow neutral clip" :class="{ 'success': copied.mlist }" @click="copy('M')">
-              <template v-if="!copied.mlist">Kopieren</template>
-              <template v-else>Kopiert!</template>
+              <template v-if="!copied.mlist">{{ t('output.copy') }}</template>
+              <template v-else>{{ t('output.copied') }}</template>
             </button>
           </div>
           <div>
-            <h5>Division</h5>
+            <h5>{{ t('output.division') }}</h5>
             <ul class="list-none p-0 font-mono">
-              <li v-for="t in dtasks" :key="t">{{ t }}</li>
+              <li v-for="dt in dtasks" :key="dt">{{ dt }}</li>
             </ul>
             <button class="hollow neutral clip" :class="{ 'success': copied.dlist }" @click="copy('D')">
-              <template v-if="!copied.dlist">Kopieren</template>
-              <template v-else>Kopiert!</template>
+              <template v-if="!copied.dlist">{{ t('output.copy') }}</template>
+              <template v-else>{{ t('output.copied') }}</template>
             </button>
           </div>
         </div>
@@ -159,11 +178,17 @@ const copy = (mode) => {
   </main>
 
   <footer class="mt-auto text-center text-muted">
-    <p>Alle Angaben und Ergebnisse ohne Gewähr</p>
     <p>
-      <span class="block">v{{ $version }}</span>
-      Created by <a href="https://twitter.com/devmount" target="_blank">Andreas Müller</a>.
-      Download on <a href="https://github.com/devmount/task-generator" target="_blank">GitHub</a>.
+      <select class="sm" v-model="locale">
+        <option value="de">Deutsch</option>
+        <option value="en">English</option>
+      </select>
+    </p>
+    <p>{{ t('footer.disclaimer') }}</p>
+    <p>
+      <pre>v{{ $version }}</pre>
+      {{ t('footer.createdBy') }} <a href="https://twitter.com/devmount" target="_blank">Andreas Müller</a>.
+      {{ t('footer.downloadOn') }} <a href="https://github.com/devmount/task-generator" target="_blank">GitHub</a>.
     </p>
   </footer>
 </template>

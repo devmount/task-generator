@@ -1,0 +1,31 @@
+{
+  "title": "Aufgaben-Generator",
+  "settings": {
+    "heading": "Einstellung",
+    "range1": "Zahlenbereich 1. Faktor / Divisor",
+    "range2": "Zahlenbereich 2. Faktor / Quotient",
+    "count": "Anzahl der Aufgaben",
+    "from": "Von",
+    "to": "bis",
+    "placeholderMin": "z.B. 1",
+    "placeholderMax": "z.B. 10",
+    "placeholderCount": "z.B. 20",
+    "start": "Start",
+    "maxReached": "Maximale Aufgabenzahl erreicht ({count} Kombinationen möglich)"
+  },
+  "output": {
+    "heading": "Ausgabe",
+    "emptyTitle": "Noch kein Ergebnis verfügbar",
+    "emptyText": "Fülle das Formular aus und klicke auf {start}, um Aufgaben zu generieren.",
+    "multiplication": "Multiplikation",
+    "division": "Division",
+    "copy": "Kopieren",
+    "copied": "Kopiert!",
+    "notDefined": "n.l."
+  },
+  "footer": {
+    "disclaimer": "Alle Angaben und Ergebnisse ohne Gewähr",
+    "createdBy": "Erstellt von",
+    "downloadOn": "Herunterladen auf"
+  }
+}
