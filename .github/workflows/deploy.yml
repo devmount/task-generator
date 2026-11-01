@@ -15,16 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v6.1.0
-      - name: Setup Node.js
-        uses: actions/setup-node@v7
+      - name: Setup pnpm and Node.js, install dependencies
+        uses: pnpm/setup@v3
         with:
-          node-version: 26
+          runtime: node@26
       - name: Build app
-        run: |
-          pnpm install
-          pnpm build
+        run: pnpm build
       - name: Push Build files to production environment
         uses: burnett01/rsync-deployments@v8
         with:
